@@ -38,11 +38,15 @@ jobs:
           tags: manish181623/wanderlust-ci-cd-be
 
       - name: Run Trivy scan on Frontend Docker image
-        uses: aquasecurity/trivy-action@v0.11.0
+        uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: manish181623/wanderlust-ci-cd-fe
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
 
       - name: Run Trivy scan on Backend Docker image
-        uses: aquasecurity/trivy-action@v0.11.0
+        uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: manish181623/wanderlust-ci-cd-be
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
