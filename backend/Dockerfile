@@ -21,7 +21,7 @@ WORKDIR /app
 # copy the above stage as compressed
 COPY --from=backend-builder /app .
 
-COPY .env.docker .env
+
 
 # Port
 EXPOSE 5000
