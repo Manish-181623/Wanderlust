@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: wander
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      name: frontend
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: manish181623/test-fe:latest-v2
+          ports:
+            - containerPort: 5173
+          env:
+            - name: VITE_API_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: VITE_API_PATH
+          # resources:
+          #   limits:
+          #     memory: "512Mi"
+          #     cpu: "500m"
+          #   requests:
+          #     memory: "256Mi"
+          #     cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: wander
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - port: 5173
+      targetPort: 5173
+      protocol: TCP
+      # nodePort: 31000
